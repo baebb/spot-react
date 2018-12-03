@@ -6,6 +6,10 @@
     "repository": "https://github.com/justrossthings/spot-react.git",
     "author": "Ross Dyson <me@rossdyson.com>",
     "license": "MIT",
+    "scripts": {
+        "start": "NODE_ENV=test webpack-dev-server --open --history-api-fallback",
+        "build": "webpack --config webpack.config.js"
+    },
     "dependencies": {
         "axios": "^0.18.0",
         "lodash": "^4.4.2",
