@@ -7,17 +7,17 @@ import { Route, Switch } from 'react-router-dom';
 // TODO: this isn't needed ...yet
 
 // Module Dependencies
-import AccessDeniedPage from 'modules/error/pages/access-denied';
-import NotFoundPage from 'modules/error/pages/not-found';
+// import AccessDeniedPage from 'modules/error/pages/access-denied';
+// import NotFoundPage from 'modules/error/pages/not-found';
 
 /**
  * RouterMap
  */
 const RouterMap = () => (
     <Switch>
-        <Route exact path="/" component={COP} />
-        <Route path="/access-denied" component={AccessDeniedPage} />
-        <Route component={NotFoundPage} />
+        <Route exact path="/" component={() => <div>hi</div>} />
+        {/* <Route path="/access-denied" component={AccessDeniedPage} /> */}
+        {/* <Route component={NotFoundPage} /> */}
     </Switch>
 );
 

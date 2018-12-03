@@ -6,7 +6,7 @@ import {
 } from 'lib/redux';
 
 // Module Name
-export const  MODULE_NAME = 'APP';
+export const MODULE_NAME = 'APP';
 
 // Action Types
 export const INIT = 'INIT';
