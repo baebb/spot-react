@@ -131,6 +131,7 @@ module.exports = {
             public: path.resolve(__dirname, 'public'),
             lib: path.resolve(__dirname, 'src/lib'),
             components: path.resolve(__dirname, 'src/components'),
+            modules: path.resolve(__dirname, 'src/modules')
         }
     }
 };
