@@ -15,7 +15,7 @@ import NotFoundPage from 'modules/error/pages/not-found';
  */
 const RouterMap = () => (
     <Switch>
-        <Route exact path="/" component={() => <div>hi dev</div>} />
+        <Route exact path="/" component={() => <div>hi prod</div>} />
         <Route path="/access-denied" component={AccessDeniedPage} />
         <Route component={NotFoundPage} />
     </Switch>
