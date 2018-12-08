@@ -7,13 +7,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // Local Dependencies
 import RouterMap from './router';
 
-/**
- * Application Component
- */
+const { NODE_ENV } = process.env;
+
 // const App = ({ authenticated }) => (
 const App = () => (
     <Fragment>
-        <h1>Spot</h1>
+        <h1>Spot {NODE_ENV}</h1>
         <Router>
             <RouterMap />
         </Router>
