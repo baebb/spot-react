@@ -11,7 +11,7 @@ const BabelPluginTransformRuntime = require('babel-plugin-transform-runtime');
 // const envConfig = require('./webpack/env');
 
 // Constants
-const OUTPUT_DIR = path.resolve('dist');
+const OUTPUT_DIR = path.resolve('build');
 
 // Plugin Configuration
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
