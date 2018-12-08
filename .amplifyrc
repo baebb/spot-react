@@ -10,5 +10,6 @@
             "StackName": "spotreact-20181208152328",
             "StackId": "arn:aws:cloudformation:ap-northeast-1:825641093003:stack/spotreact-20181208152328/c6f63620-fab1-11e8-8a19-0a534bae3094"
         }
-    }
+    },
+    "publish-ignore": []
 }
