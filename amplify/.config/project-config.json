@@ -5,7 +5,7 @@
         "config": {
             "SourceDir": "src",
             "DistributionDir": "build",
-            "BuildCommand": "npm run-script build",
+            "BuildCommand": "npm run-script build:develop",
             "StartCommand": "yarn run start"
         }
     },
