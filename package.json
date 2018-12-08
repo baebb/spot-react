@@ -8,8 +8,8 @@
     "license": "MIT",
     "scripts": {
         "start": "NODE_ENV=test webpack-dev-server --open --history-api-fallback",
-        "build:dev": "NODE_ENV=develop webpack --config webpack.config.js",
-        "build": "NODE_ENV=production webpack --config webpack.config.js"
+        "build:dev": "NODE_ENV=dev webpack --config webpack.config.js",
+        "build": "NODE_ENV=prod webpack --config webpack.config.js"
     },
     "dependencies": {
         "axios": "^0.18.0",
