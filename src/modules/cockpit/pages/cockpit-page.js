@@ -4,6 +4,9 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
+// UI Dependencies
+import { Row, Col } from 'antd';
+
 // Local Dependencies
 import {
     leftKeyDownSignal,
@@ -15,6 +18,7 @@ import {
     downKeyDownSignal,
     downKeyUpSignal
 } from '../actions';
+import ArrowButton from '../components/arrow-button';
 
 class CockpitPage extends Component {
     static propTypes = {
@@ -28,18 +32,81 @@ class CockpitPage extends Component {
         downKeyUp: PropTypes.func.isRequired
     };
 
-    // constructor(props) {
-    //     super(props);
-    //
-    //     this.state = {
-    //
-    //     };
-    // }
+    controlTouchStart = ({ control }) => {
+        const {
+            leftKeyDown, rightKeyDown, upKeyDown, downKeyDown
+        } = this.props;
+
+        console.log(`${control} start`);
+
+        switch (control) {
+            case 'left':
+                return leftKeyDown();
+            case 'right':
+                return rightKeyDown();
+            case 'up':
+                return upKeyDown();
+            case 'down':
+                return downKeyDown();
+            default:
+                return null;
+        }
+    };
+
+    controlTouchEnd = ({ control }) => {
+        const {
+            leftKeyUp, rightKeyUp, upKeyUp, downKeyUp
+        } = this.props;
+
+        console.log(`${control} end`);
+
+        switch (control) {
+            case 'left':
+                return leftKeyUp();
+            case 'right':
+                return rightKeyUp();
+            case 'up':
+                return upKeyUp();
+            case 'down':
+                return downKeyUp();
+            default:
+                return null;
+        }
+    };
 
     render() {
         return (
             <div>
                 cockpit page
+                <Row type="flex" justify="space-between" align="bottom">
+                    <Col span={8}>
+                        <ArrowButton
+                            control="down"
+                            onTouchStart={this.controlTouchStart}
+                            onTouchEnd={this.controlTouchEnd}
+                        />
+                    </Col>
+                    <Col span={8}>
+                        <ArrowButton
+                            control="up"
+                            onTouchStart={this.controlTouchStart}
+                            onTouchEnd={this.controlTouchEnd}
+                        />
+                        <br />
+                        <ArrowButton
+                            control="down"
+                            onTouchStart={this.controlTouchStart}
+                            onTouchEnd={this.controlTouchEnd}
+                        />
+                    </Col>
+                    <Col span={8}>
+                        <ArrowButton
+                            control="right"
+                            onTouchStart={this.controlTouchStart}
+                            onTouchEnd={this.controlTouchEnd}
+                        />
+                    </Col>
+                </Row>
             </div>
         );
     }

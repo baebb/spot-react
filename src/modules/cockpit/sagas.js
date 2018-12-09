@@ -1,5 +1,5 @@
 // NPM Dependencies
-import { fork, throttle, call } from 'redux-saga/effects';
+import { fork, throttle } from 'redux-saga/effects';
 
 import {
     leftKeyDownSignal,
@@ -12,9 +12,10 @@ import {
     downKeyUpSignal
 } from './actions';
 
-export function* chill({ payload, type }) {
-    yield call(console.log('payload', payload));
-    yield call(console.log('type', type));
+export function* chill({ type }) {
+    console.log('type', type);
+
+    return null;
 }
 
 export function* watchLeftKeyDownSignal() {
