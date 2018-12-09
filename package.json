@@ -12,6 +12,7 @@
         "build": "NODE_ENV=prod webpack --config webpack.config.js"
     },
     "dependencies": {
+        "antd": "^3.11.1",
         "axios": "^0.18.0",
         "lodash": "^4.4.2",
         "prop-types": "~15.6.1",

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 // Local Dependencies
+import './core.styles.scss';
 import RouterMap from './router';
 
 const { NODE_ENV } = process.env;
