@@ -13,6 +13,7 @@
     },
     "dependencies": {
         "antd": "^3.11.1",
+        "aws-amplify": "^1.1.13",
         "axios": "^0.18.0",
         "lodash": "^4.4.2",
         "prop-types": "~15.6.1",
