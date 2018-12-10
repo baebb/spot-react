@@ -2,6 +2,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// Public Dependencies
+import upArrow from '../../../../public/img/up-arrow.svg';
+import downArrow from '../../../../public/img/down-arrow.svg';
+import leftArrow from '../../../../public/img/left-arrow.svg';
+import rightArrow from '../../../../public/img/right-arrow.svg';
+
+const arrowDictionary = {
+    up: upArrow,
+    down: downArrow,
+    left: leftArrow,
+    right: rightArrow
+};
+
 const buttonStyle = { width: '100%' };
 
 const ArrowButton = ({
@@ -20,7 +33,7 @@ const ArrowButton = ({
     >
         <img
             style={buttonStyle}
-            src={`../../../../public/img/${control}-arrow.svg`}
+            src={arrowDictionary[control]}
             alt={`${control} arrow button`}
         />
     </button>
