@@ -1,7 +1,12 @@
 // NPM Dependencies
-import { fork, throttle } from 'redux-saga/effects';
+import { fork, throttle, takeLatest, put, call } from 'redux-saga/effects';
 
+// Module Dependencies
+import { initApplicationSignal } from 'modules/app/actions';
+
+// Local Dependencies
 import {
+    configurePubSubSignal,
     leftKeyDownSignal,
     leftKeyUpSignal,
     rightKeyDownSignal,
@@ -11,6 +16,7 @@ import {
     downKeyDownSignal,
     downKeyUpSignal
 } from './actions';
+import { configurePubSub } from './services';
 
 export function* chill({ type }) {
     console.log('type', type);
@@ -82,7 +88,25 @@ export function* watchDownKeyUpSignal() {
     );
 }
 
+export function* initializePubSubOnRequest() {
+    try {
+        yield call(configurePubSub);
+
+        yield put(configurePubSubSignal.success());
+    } catch (error) {
+        yield put(configurePubSubSignal.failure({ error }));
+    }
+}
+
+export function* watchInitializePubSub() {
+    yield takeLatest(
+        initApplicationSignal.SUCCESS,
+        initializePubSubOnRequest
+    );
+}
+
 export default [
+    fork(watchInitializePubSub),
     fork(watchLeftKeyDownSignal),
     fork(watchLeftKeyUpSignal),
     fork(watchRightKeyDownSignal),

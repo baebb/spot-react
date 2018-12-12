@@ -9,6 +9,7 @@ import {
 export const MODULE_NAME = 'COCKPIT';
 
 // Action Types
+export const CONFIG_PUBSUB = 'CONFIG_PUBSUB';
 export const LEFT_KEY_DOWN = 'LEFT_KEY_DOWN';
 export const LEFT_KEY_UP = 'LEFT_KEY_UP';
 export const RIGHT_KEY_DOWN = 'RIGHT_KEY_DOWN';
@@ -19,6 +20,7 @@ export const DOWN_KEY_DOWN = 'DOWN_KEY_DOWN';
 export const DOWN_KEY_UP = 'DOWN_KEY_UP';
 
 // Signals
+export const configurePubSubSignal = createSignalAction(MODULE_NAME, CONFIG_PUBSUB);
 export const leftKeyDownSignal = createSignalAction(MODULE_NAME, LEFT_KEY_DOWN);
 export const leftKeyUpSignal = createSignalAction(MODULE_NAME, LEFT_KEY_UP);
 export const rightKeyDownSignal = createSignalAction(MODULE_NAME, RIGHT_KEY_DOWN);
