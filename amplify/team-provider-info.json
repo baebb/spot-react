@@ -21,6 +21,11 @@
             "UnauthRoleName": "spotreact-20181208170346-unauthRole",
             "StackName": "spotreact-20181208170346",
             "StackId": "arn:aws:cloudformation:ap-northeast-1:825641093003:stack/spotreact-20181208170346/ca0653f0-fabf-11e8-8d94-50d5ca9ff482"
+        },
+        "categories": {
+            "auth": {
+                "cognitoa60363e2": {}
+            }
         }
     }
 }
