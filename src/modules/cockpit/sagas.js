@@ -1,118 +1,74 @@
 // NPM Dependencies
-import { fork, throttle, takeLatest, put, call } from 'redux-saga/effects';
+import { fork, throttle, takeLatest, put, call, all } from 'redux-saga/effects';
 
 // Module Dependencies
 import { initApplicationSignal } from 'modules/app/actions';
 
 // Local Dependencies
 import {
-    configurePubSubSignal,
-    leftKeyDownSignal,
-    leftKeyUpSignal,
-    rightKeyDownSignal,
-    rightKeyUpSignal,
-    upKeyDownSignal,
-    upKeyUpSignal,
-    downKeyDownSignal,
-    downKeyUpSignal
+    configAuthSignal,
+    configPubSubSignal,
+    sendControlSignal
 } from './actions';
-import { configurePubSub } from './services';
+import { configurePubSub, sendControl, configureAuth } from './services';
 
-export function* chill({ type }) {
-    console.log('type', type);
-
-    return null;
-}
-
-export function* watchLeftKeyDownSignal() {
-    yield throttle(
-        500,
-        leftKeyDownSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchLeftKeyUpSignal() {
-    yield throttle(
-        500,
-        leftKeyUpSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchRightKeyDownSignal() {
-    yield throttle(
-        500,
-        rightKeyDownSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchRightKeyUpSignal() {
-    yield throttle(
-        500,
-        rightKeyUpSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchUpKeyDownSignal() {
-    yield throttle(
-        500,
-        upKeyDownSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchUpKeyUpSignal() {
-    yield throttle(
-        500,
-        upKeyUpSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchDownKeyDownSignal() {
-    yield throttle(
-        500,
-        downKeyDownSignal.REQUEST,
-        chill
-    );
-}
-
-export function* watchDownKeyUpSignal() {
-    yield throttle(
-        500,
-        downKeyUpSignal.REQUEST,
-        chill
-    );
-}
-
-export function* initializePubSubOnRequest() {
+export function* sendControlOnRequest({ payload }) {
     try {
-        yield call(configurePubSub);
+        const { control } = payload;
+        console.log('control', control);
 
-        yield put(configurePubSubSignal.success());
+        yield call(sendControl, { control });
+
+        yield put(sendControlSignal.success({ control }));
     } catch (error) {
-        yield put(configurePubSubSignal.failure({ error }));
+        yield put(sendControlSignal.failure({ error }));
     }
 }
 
-export function* watchInitializePubSub() {
+export function* watchSendControlSignal() {
+    yield throttle(
+        500,
+        sendControlSignal.REQUEST,
+        sendControlOnRequest
+    );
+}
+
+export function* initAuthOnRequest() {
+    try {
+        yield call(configureAuth);
+
+        yield put(configAuthSignal.success());
+    } catch (error) {
+        yield put(configAuthSignal.failure({ error }));
+    }
+}
+
+export function* watchInitAuthSignal() {
     yield takeLatest(
         initApplicationSignal.SUCCESS,
-        initializePubSubOnRequest
+        initAuthOnRequest
+    );
+}
+
+export function* initPubSubOnRequest() {
+    try {
+        yield call(configurePubSub);
+
+        yield put(configPubSubSignal.success());
+    } catch (error) {
+        yield put(configPubSubSignal.failure({ error }));
+    }
+}
+
+export function* watchInitPubSubSignal() {
+    yield takeLatest(
+        configAuthSignal.SUCCESS,
+        initPubSubOnRequest
     );
 }
 
 export default [
-    fork(watchInitializePubSub),
-    fork(watchLeftKeyDownSignal),
-    fork(watchLeftKeyUpSignal),
-    fork(watchRightKeyDownSignal),
-    fork(watchRightKeyUpSignal),
-    fork(watchUpKeyDownSignal),
-    fork(watchUpKeyUpSignal),
-    fork(watchDownKeyDownSignal),
-    fork(watchDownKeyUpSignal)
+    fork(watchInitAuthSignal),
+    fork(watchInitPubSubSignal),
+    fork(watchSendControlSignal)
 ];

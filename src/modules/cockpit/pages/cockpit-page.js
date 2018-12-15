@@ -8,70 +8,42 @@ import { bindActionCreators } from 'redux';
 import { Row, Col } from 'antd';
 
 // Local Dependencies
-import {
-    leftKeyDownSignal,
-    leftKeyUpSignal,
-    rightKeyDownSignal,
-    rightKeyUpSignal,
-    upKeyDownSignal,
-    upKeyUpSignal,
-    downKeyDownSignal,
-    downKeyUpSignal
-} from '../actions';
+import { sendControlSignal } from '../actions';
 import ArrowButton from '../components/arrow-button';
 
 class CockpitPage extends Component {
     static propTypes = {
-        leftKeyDown: PropTypes.func.isRequired,
-        leftKeyUp: PropTypes.func.isRequired,
-        rightKeyDown: PropTypes.func.isRequired,
-        rightKeyUp: PropTypes.func.isRequired,
-        upKeyDown: PropTypes.func.isRequired,
-        upKeyUp: PropTypes.func.isRequired,
-        downKeyDown: PropTypes.func.isRequired,
-        downKeyUp: PropTypes.func.isRequired
+        sendControl: PropTypes.func.isRequired
     };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            sendingControl: false
+        };
+    }
 
     controlTouchStart = ({ control }) => {
-        const {
-            leftKeyDown, rightKeyDown, upKeyDown, downKeyDown
-        } = this.props;
+        const { sendingControl } = this.state;
+        const { sendControl } = this.props;
 
-        console.log(`${control} start`);
+        if (!sendingControl) {
+            sendControl({ control });
 
-        switch (control) {
-            case 'left':
-                return leftKeyDown();
-            case 'right':
-                return rightKeyDown();
-            case 'up':
-                return upKeyDown();
-            case 'down':
-                return downKeyDown();
-            default:
-                return null;
+            this.setState({
+                sendingControl: true
+            });
         }
     };
 
-    controlTouchEnd = ({ control }) => {
-        const {
-            leftKeyUp, rightKeyUp, upKeyUp, downKeyUp
-        } = this.props;
+    controlTouchEnd = () => {
+        const { sendControl } = this.props;
 
-        console.log(`${control} end`);
-
-        switch (control) {
-            case 'left':
-                return leftKeyUp();
-            case 'right':
-                return rightKeyUp();
-            case 'up':
-                return upKeyUp();
-            case 'down':
-                return downKeyUp();
-            default:
-                return null;
-        }
+        sendControl({ control: 'stop' });
+        this.setState({
+            sendingControl: false
+        });
     };
 
     render() {
@@ -118,14 +90,7 @@ class CockpitPage extends Component {
 
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
-        leftKeyDown: leftKeyDownSignal.request,
-        leftKeyUp: leftKeyUpSignal.request,
-        rightKeyDown: rightKeyDownSignal.request,
-        rightKeyUp: rightKeyUpSignal.request,
-        upKeyDown: upKeyDownSignal.request,
-        upKeyUp: upKeyUpSignal.request,
-        downKeyDown: downKeyDownSignal.request,
-        downKeyUp: downKeyUpSignal.request
+        sendControl: sendControlSignal.request
     }, dispatch);
 
 export default connect(null, mapDispatchToProps)(CockpitPage);

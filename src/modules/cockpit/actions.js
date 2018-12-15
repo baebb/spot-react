@@ -9,26 +9,30 @@ import {
 export const MODULE_NAME = 'COCKPIT';
 
 // Action Types
+export const CONFIG_AUTH = 'CONFIG_AUTH';
 export const CONFIG_PUBSUB = 'CONFIG_PUBSUB';
-export const LEFT_KEY_DOWN = 'LEFT_KEY_DOWN';
-export const LEFT_KEY_UP = 'LEFT_KEY_UP';
-export const RIGHT_KEY_DOWN = 'RIGHT_KEY_DOWN';
-export const RIGHT_KEY_UP = 'RIGHT_KEY_UP';
-export const UP_KEY_DOWN = 'UP_KEY_DOWN';
-export const UP_KEY_UP = 'UP_KEY_UP';
-export const DOWN_KEY_DOWN = 'DOWN_KEY_DOWN';
-export const DOWN_KEY_UP = 'DOWN_KEY_UP';
+export const SEND_CONTROL = 'SEND_CONTROL';
+// export const LEFT_KEY_DOWN = 'LEFT_KEY_DOWN';
+// export const LEFT_KEY_UP = 'LEFT_KEY_UP';
+// export const RIGHT_KEY_DOWN = 'RIGHT_KEY_DOWN';
+// export const RIGHT_KEY_UP = 'RIGHT_KEY_UP';
+// export const UP_KEY_DOWN = 'UP_KEY_DOWN';
+// export const UP_KEY_UP = 'UP_KEY_UP';
+// export const DOWN_KEY_DOWN = 'DOWN_KEY_DOWN';
+// export const DOWN_KEY_UP = 'DOWN_KEY_UP';
 
 // Signals
-export const configurePubSubSignal = createSignalAction(MODULE_NAME, CONFIG_PUBSUB);
-export const leftKeyDownSignal = createSignalAction(MODULE_NAME, LEFT_KEY_DOWN);
-export const leftKeyUpSignal = createSignalAction(MODULE_NAME, LEFT_KEY_UP);
-export const rightKeyDownSignal = createSignalAction(MODULE_NAME, RIGHT_KEY_DOWN);
-export const rightKeyUpSignal = createSignalAction(MODULE_NAME, RIGHT_KEY_UP);
-export const upKeyDownSignal = createSignalAction(MODULE_NAME, UP_KEY_DOWN);
-export const upKeyUpSignal = createSignalAction(MODULE_NAME, UP_KEY_UP);
-export const downKeyDownSignal = createSignalAction(MODULE_NAME, DOWN_KEY_DOWN);
-export const downKeyUpSignal = createSignalAction(MODULE_NAME, DOWN_KEY_UP);
+export const configAuthSignal = createSignalAction(MODULE_NAME, CONFIG_AUTH);
+export const configPubSubSignal = createSignalAction(MODULE_NAME, CONFIG_PUBSUB);
+export const sendControlSignal = createSignalAction(MODULE_NAME, SEND_CONTROL);
+// export const leftKeyDownSignal = createSignalAction(MODULE_NAME, LEFT_KEY_DOWN);
+// export const leftKeyUpSignal = createSignalAction(MODULE_NAME, LEFT_KEY_UP);
+// export const rightKeyDownSignal = createSignalAction(MODULE_NAME, RIGHT_KEY_DOWN);
+// export const rightKeyUpSignal = createSignalAction(MODULE_NAME, RIGHT_KEY_UP);
+// export const upKeyDownSignal = createSignalAction(MODULE_NAME, UP_KEY_DOWN);
+// export const upKeyUpSignal = createSignalAction(MODULE_NAME, UP_KEY_UP);
+// export const downKeyDownSignal = createSignalAction(MODULE_NAME, DOWN_KEY_DOWN);
+// export const downKeyUpSignal = createSignalAction(MODULE_NAME, DOWN_KEY_UP);
 
 
 // Deltas
