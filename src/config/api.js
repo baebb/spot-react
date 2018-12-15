@@ -1,9 +1,11 @@
 const {
     awsRegion,
-    awsPubsubEndpoint
+    pusherAppKey,
+    pusherCluster
 } = process.env.SPOT_CONTROL_PORTAL;
 
 export default {
     awsRegion,
-    awsPubsubEndpoint
+    pusherAppKey,
+    pusherCluster
 };

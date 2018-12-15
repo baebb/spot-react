@@ -33,22 +33,22 @@ export function* watchSendControlSignal() {
     );
 }
 
-export function* initAuthOnRequest() {
-    try {
-        yield call(configureAuth);
-
-        yield put(configAuthSignal.success());
-    } catch (error) {
-        yield put(configAuthSignal.failure({ error }));
-    }
-}
-
-export function* watchInitAuthSignal() {
-    yield takeLatest(
-        initApplicationSignal.SUCCESS,
-        initAuthOnRequest
-    );
-}
+// export function* initAuthOnRequest() {
+//     try {
+//         yield call(configureAuth);
+//
+//         yield put(configAuthSignal.success());
+//     } catch (error) {
+//         yield put(configAuthSignal.failure({ error }));
+//     }
+// }
+//
+// export function* watchInitAuthSignal() {
+//     yield takeLatest(
+//         initApplicationSignal.SUCCESS,
+//         initAuthOnRequest
+//     );
+// }
 
 export function* initPubSubOnRequest() {
     try {
@@ -62,13 +62,12 @@ export function* initPubSubOnRequest() {
 
 export function* watchInitPubSubSignal() {
     yield takeLatest(
-        configAuthSignal.SUCCESS,
+        initApplicationSignal.SUCCESS,
         initPubSubOnRequest
     );
 }
 
 export default [
-    fork(watchInitAuthSignal),
     fork(watchInitPubSubSignal),
     fork(watchSendControlSignal)
 ];
