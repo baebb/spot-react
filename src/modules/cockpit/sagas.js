@@ -6,11 +6,11 @@ import { initApplicationSignal } from 'modules/app/actions';
 
 // Local Dependencies
 import {
-    configAuthSignal,
+    // configAuthSignal,
     configPubSubSignal,
     sendControlSignal
 } from './actions';
-import { configurePubSub, sendControl, configureAuth } from './services';
+import { configurePubSub, sendControl, connectToChannel } from './services';
 
 export function* sendControlOnRequest({ payload }) {
     try {
@@ -53,6 +53,8 @@ export function* watchSendControlSignal() {
 export function* initPubSubOnRequest() {
     try {
         yield call(configurePubSub);
+
+        yield call(connectToChannel);
 
         yield put(configPubSubSignal.success());
     } catch (error) {
