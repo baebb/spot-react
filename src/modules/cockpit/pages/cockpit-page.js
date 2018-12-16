@@ -1,8 +1,10 @@
 // NPM Dependencies
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
+
 
 // UI Dependencies
 import { Row, Col } from 'antd';
@@ -24,7 +26,7 @@ class CockpitPage extends Component {
         };
     }
 
-    controlTouchStart = ({ control }) => {
+    controlTouchStart = (control) => {
         const { sendingControl } = this.state;
         const { sendControl } = this.props;
 
@@ -47,43 +49,58 @@ class CockpitPage extends Component {
     };
 
     render() {
+        const { sendingControl } = this.state;
+
         return (
-            <Row type="flex" justify="center">
-                <Col span={6}>
-                    <div>
-                        cockpit page
-                        <Row type="flex" justify="space-between" align="bottom">
-                            <Col span={8}>
-                                <ArrowButton
-                                    control="left"
-                                    onTouchStart={this.controlTouchStart}
-                                    onTouchEnd={this.controlTouchEnd}
-                                />
-                            </Col>
-                            <Col span={8}>
-                                <ArrowButton
-                                    control="up"
-                                    onTouchStart={this.controlTouchStart}
-                                    onTouchEnd={this.controlTouchEnd}
-                                />
-                                <br />
-                                <ArrowButton
-                                    control="down"
-                                    onTouchStart={this.controlTouchStart}
-                                    onTouchEnd={this.controlTouchEnd}
-                                />
-                            </Col>
-                            <Col span={8}>
-                                <ArrowButton
-                                    control="right"
-                                    onTouchStart={this.controlTouchStart}
-                                    onTouchEnd={this.controlTouchEnd}
-                                />
-                            </Col>
-                        </Row>
-                    </div>
-                </Col>
-            </Row>
+            <Fragment>
+                <KeyboardEventHandler
+                    handleKeys={['up', 'down', 'left', 'right']}
+                    handleEventType="keydown"
+                    isDisabled={sendingControl}
+                    onKeyEvent={this.controlTouchStart}
+                />
+                <KeyboardEventHandler
+                    handleKeys={['up', 'down', 'left', 'right']}
+                    handleEventType="keyup"
+                    onKeyEvent={this.controlTouchEnd}
+                />
+                <Row type="flex" justify="center">
+                    <Col span={6}>
+                        <div>
+                            cockpit page
+                            <Row type="flex" justify="space-between" align="bottom">
+                                <Col span={8}>
+                                    <ArrowButton
+                                        control="left"
+                                        onTouchStart={this.controlTouchStart}
+                                        onTouchEnd={this.controlTouchEnd}
+                                    />
+                                </Col>
+                                <Col span={8}>
+                                    <ArrowButton
+                                        control="up"
+                                        onTouchStart={this.controlTouchStart}
+                                        onTouchEnd={this.controlTouchEnd}
+                                    />
+                                    <br />
+                                    <ArrowButton
+                                        control="down"
+                                        onTouchStart={this.controlTouchStart}
+                                        onTouchEnd={this.controlTouchEnd}
+                                    />
+                                </Col>
+                                <Col span={8}>
+                                    <ArrowButton
+                                        control="right"
+                                        onTouchStart={this.controlTouchStart}
+                                        onTouchEnd={this.controlTouchEnd}
+                                    />
+                                </Col>
+                            </Row>
+                        </div>
+                    </Col>
+                </Row>
+            </Fragment>
         );
     }
 }
