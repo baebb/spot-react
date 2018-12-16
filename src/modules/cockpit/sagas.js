@@ -1,5 +1,5 @@
 // NPM Dependencies
-import { fork, throttle, takeLatest, put, call, all } from 'redux-saga/effects';
+import { fork, throttle, takeLatest, put, call } from 'redux-saga/effects';
 
 // Module Dependencies
 import { initApplicationSignal } from 'modules/app/actions';
@@ -10,16 +10,15 @@ import {
     configPubSubSignal,
     sendControlSignal
 } from './actions';
-import { configurePubSub, sendControl, connectToChannel } from './services';
+import { configurePubSub, sendControl } from './services';
 
 export function* sendControlOnRequest({ payload }) {
     try {
         const { control } = payload;
-        console.log('control', control);
 
-        yield call(sendControl, { control });
+        const publishControl = yield call(sendControl, { control });
 
-        yield put(sendControlSignal.success({ control }));
+        yield put(sendControlSignal.success(publishControl));
     } catch (error) {
         yield put(sendControlSignal.failure({ error }));
     }
@@ -52,11 +51,9 @@ export function* watchSendControlSignal() {
 
 export function* initPubSubOnRequest() {
     try {
-        yield call(configurePubSub);
+        const pubsubConnect = yield call(configurePubSub);
 
-        yield call(connectToChannel);
-
-        yield put(configPubSubSignal.success());
+        yield put(configPubSubSignal.success(pubsubConnect));
     } catch (error) {
         yield put(configPubSubSignal.failure({ error }));
     }
