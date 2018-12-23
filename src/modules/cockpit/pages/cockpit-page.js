@@ -65,38 +65,38 @@ class CockpitPage extends Component {
                     onKeyEvent={this.controlTouchEnd}
                 />
                 <Row type="flex" justify="center">
-                    <Col span={6}>
-                        <div>
-                            cockpit page
-                            <Row type="flex" justify="space-between" align="bottom">
-                                <Col span={8}>
-                                    <ArrowButton
-                                        control="left"
-                                        onTouchStart={this.controlTouchStart}
-                                        onTouchEnd={this.controlTouchEnd}
-                                    />
-                                </Col>
-                                <Col span={8}>
-                                    <ArrowButton
-                                        control="up"
-                                        onTouchStart={this.controlTouchStart}
-                                        onTouchEnd={this.controlTouchEnd}
-                                    />
-                                    <br />
-                                    <ArrowButton
-                                        control="down"
-                                        onTouchStart={this.controlTouchStart}
-                                        onTouchEnd={this.controlTouchEnd}
-                                    />
-                                </Col>
-                                <Col span={8}>
-                                    <ArrowButton
-                                        control="right"
-                                        onTouchStart={this.controlTouchStart}
-                                        onTouchEnd={this.controlTouchEnd}
-                                    />
-                                </Col>
-                            </Row>
+                    <Col span={20} md={6}>
+                        <Row type="flex" justify="space-between" align="bottom">
+                            <Col span={8}>
+                                <ArrowButton
+                                    control="left"
+                                    onTouchStart={this.controlTouchStart}
+                                    onTouchEnd={this.controlTouchEnd}
+                                />
+                            </Col>
+                            <Col span={8}>
+                                <ArrowButton
+                                    control="up"
+                                    onTouchStart={this.controlTouchStart}
+                                    onTouchEnd={this.controlTouchEnd}
+                                />
+                                <br />
+                                <ArrowButton
+                                    control="down"
+                                    onTouchStart={this.controlTouchStart}
+                                    onTouchEnd={this.controlTouchEnd}
+                                />
+                            </Col>
+                            <Col span={8}>
+                                <ArrowButton
+                                    control="right"
+                                    onTouchStart={this.controlTouchStart}
+                                    onTouchEnd={this.controlTouchEnd}
+                                />
+                            </Col>
+                        </Row>
+                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                            <p>Use your keyboard arrows to control</p>
                         </div>
                     </Col>
                 </Row>
