@@ -65,7 +65,7 @@ class CockpitPage extends Component {
                     onKeyEvent={this.controlTouchEnd}
                 />
                 <Row type="flex" justify="center">
-                    <Col span={20} md={6}>
+                    <Col span={20} sm={6}>
                         <Row type="flex" justify="space-between" align="bottom">
                             <Col span={8}>
                                 <ArrowButton
@@ -95,8 +95,11 @@ class CockpitPage extends Component {
                                 />
                             </Col>
                         </Row>
-                        <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                        <div style={{ textAlign: 'center', marginTop: '20px' }} className="hide-mobile">
                             <p>Use your keyboard arrows to control</p>
+                        </div>
+                        <div style={{ textAlign: 'center', marginTop: '20px' }} className="hide-desktop">
+                            <p>Touch and hold arrows to control</p>
                         </div>
                     </Col>
                 </Row>
