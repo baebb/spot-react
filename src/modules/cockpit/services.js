@@ -14,7 +14,8 @@ export const configurePubSub = () => {
     });
 
     pubnub.subscribe({
-        channels: ['controls']
+        channels: ['controls'],
+        withPresence: true
     });
 
     return new Promise((resolve, reject) => {
@@ -22,6 +23,16 @@ export const configurePubSub = () => {
             status: statusEvent => (statusEvent.category === 'PNConnectedCategory' ?
                 resolve(statusEvent) : reject(statusEvent))
         });
+    });
+};
+
+export const getCurrentUsers = () => {
+    return new Promise((resolve, reject) => {
+        pubnub.hereNow({ channels: ['controls'], includeUUIDs: true, includeState: true },
+            (status, response) => {
+                resolve({ status, response });
+            }
+        );
     });
 };
 
@@ -37,7 +48,10 @@ export const configurePubSub = () => {
 
 export const sendControl = ({ control }) => new Promise((resolve, reject) => {
     pubnub.publish(
-        { message: { control }, channel: 'controls' },
+        {
+            message: { control },
+            channel: 'controls'
+        },
         status => (status.error ? reject(status) : resolve(status))
     );
 });

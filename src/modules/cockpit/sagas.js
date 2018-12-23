@@ -8,9 +8,10 @@ import { initApplicationSignal } from 'modules/app/actions';
 import {
     // configAuthSignal,
     configPubSubSignal,
-    sendControlSignal
+    sendControlSignal,
+    getUserCountSignal
 } from './actions';
-import { configurePubSub, sendControl } from './services';
+import { configurePubSub, sendControl, getCurrentUsers } from './services';
 
 export function* sendControlOnRequest({ payload }) {
     try {
@@ -59,14 +60,33 @@ export function* initPubSubOnRequest() {
     }
 }
 
-export function* watchInitPubSubSignal() {
+export function* watchAppInitSuccessSignal() {
     yield takeLatest(
         initApplicationSignal.SUCCESS,
         initPubSubOnRequest
     );
 }
 
+export function* checkCurrentUsersOnRequest() {
+    try {
+        const getUserCount = yield call(getCurrentUsers);
+
+        console.log('getUserCount:', getUserCount);
+
+        yield put(getUserCountSignal.success({ getUserCount }));
+    } catch (error) {
+        yield put(getUserCountSignal.failure({ error }));
+    }
+}
+
+export function* watchPubSubSuccessSignal() {
+    yield takeLatest(
+        configPubSubSignal.SUCCESS,
+        checkCurrentUsersOnRequest
+    );
+}
+
 export default [
-    fork(watchInitPubSubSignal),
+    fork(watchAppInitSuccessSignal),
     fork(watchSendControlSignal)
 ];

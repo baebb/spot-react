@@ -12,11 +12,13 @@ export const MODULE_NAME = 'COCKPIT';
 export const CONFIG_AUTH = 'CONFIG_AUTH';
 export const CONFIG_PUBSUB = 'CONFIG_PUBSUB';
 export const SEND_CONTROL = 'SEND_CONTROL';
+export const GET_USER_COUNT = 'GET_USER_COUNT';
 
 // Signals
 // export const configAuthSignal = createSignalAction(MODULE_NAME, CONFIG_AUTH);
 export const configPubSubSignal = createSignalAction(MODULE_NAME, CONFIG_PUBSUB);
 export const sendControlSignal = createSignalAction(MODULE_NAME, SEND_CONTROL);
+export const getUserCountSignal = createSignalAction(MODULE_NAME, GET_USER_COUNT);
 
 
 // Deltas
