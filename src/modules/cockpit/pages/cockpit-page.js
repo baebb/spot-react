@@ -67,7 +67,7 @@ class CockpitPage extends Component {
                 <Row type="flex" justify="center">
                     <Col span={20} sm={6}>
                         <div style={{ textAlign: 'center' }}>
-                            <img alt="cam" src="http://153.182.124.165:3030/" />
+                            <img alt="cam" src="http://153.182.124.165:3030/" className="img-responsive" />
                         </div>
                         <Row type="flex" justify="space-between" align="bottom">
                             <Col span={8}>
