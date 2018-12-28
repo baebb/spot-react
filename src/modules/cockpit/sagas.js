@@ -11,7 +11,7 @@ import {
     getUserCountSignal,
     configPubSubSignal,
     sendControlSignal,
-    updateDroneStatus,
+    updateDroneStatus
 } from './actions';
 import { configurePubSub, sendControl, getCurrentUsers, watchPresence } from './services';
 

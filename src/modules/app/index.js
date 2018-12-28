@@ -13,10 +13,10 @@ const { NODE_ENV } = process.env;
 // const App = ({ authenticated }) => (
 const App = () => (
     <Fragment>
-        <h1>Spot {NODE_ENV}</h1>
         <Router>
             <RouterMap />
         </Router>
+        <p>{NODE_ENV}</p>
     </Fragment>
 );
 

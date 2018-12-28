@@ -7,7 +7,7 @@ import KeyboardEventHandler from 'react-keyboard-event-handler';
 
 
 // UI Dependencies
-import { Row, Col } from 'antd';
+import { Row, Col, Spin } from 'antd';
 
 // Local Dependencies
 import { sendControlSignal } from '../actions';
@@ -15,7 +15,9 @@ import ArrowButton from '../components/arrow-button';
 
 class CockpitPage extends Component {
     static propTypes = {
-        sendControl: PropTypes.func.isRequired
+        sendControl: PropTypes.func.isRequired,
+        droneOnline: PropTypes.bool.isRequired,
+        cockpitLoading: PropTypes.bool.isRequired
     };
 
     constructor(props) {
@@ -50,6 +52,23 @@ class CockpitPage extends Component {
 
     render() {
         const { sendingControl } = this.state;
+        const { droneOnline, cockpitLoading } = this.props;
+
+        if (cockpitLoading) {
+            return (
+                <div style={{ textAlign: 'center' }}>
+                    <Spin tip="loading..." size="large" style={{ marginTop: '200px' }} />
+                </div>
+            );
+        }
+
+        if (!droneOnline) {
+            return (
+                <div style={{ textAlign: 'center' }}>
+                    <h1 style={{ marginTop: '200px' }}>Drone offline</h1>
+                </div>
+            );
+        }
 
         return (
             <Fragment>
@@ -111,9 +130,17 @@ class CockpitPage extends Component {
     }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        ...state,
+        droneOnline: state.cockpit.droneOnline,
+        cockpitLoading: state.cockpit.cockpitLoading
+    };
+};
+
 const mapDispatchToProps = dispatch =>
     bindActionCreators({
         sendControl: sendControlSignal.request
     }, dispatch);
 
-export default connect(null, mapDispatchToProps)(CockpitPage);
+export default connect(mapStateToProps, mapDispatchToProps)(CockpitPage);

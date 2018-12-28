@@ -1,13 +1,15 @@
 import { UPDATE_DRONE_STATUS_DELTA } from './actions';
 
 const initialState = {
-    droneOnline: false
+    droneOnline: false,
+    cockpitLoading: true
 };
 
 function updateDroneStatus(state, droneStatus) {
     return {
         ...state,
-        droneOnline: droneStatus
+        droneOnline: droneStatus,
+        cockpitLoading: false
     };
 }
 
