@@ -1,5 +1,6 @@
 // NPM Dependencies
 import PubNub from 'pubnub';
+import { eventChannel } from 'redux-saga';
 
 import apiConfig from 'config/api';
 
@@ -26,15 +27,31 @@ export const configurePubSub = () => {
     });
 };
 
-export const getCurrentUsers = () => {
-    return new Promise((resolve, reject) => {
-        pubnub.hereNow({ channels: ['controls'], includeUUIDs: true, includeState: true },
-            (status, response) => {
-                resolve({ status, response });
-            }
-        );
+export const watchPresence = () => eventChannel((emit) => {
+    pubnub.addListener({
+        presence: (presence) => {
+            // const { action } = presence;
+            // console.log('new presence');
+            // console.log('action: ', action);
+            console.log('new presence: ', presence);
+            emit(presence);
+        }
     });
-};
+    return () => {
+        console.log('lol what even is this?');
+    };
+});
+
+export const getCurrentUsers = () => new Promise((resolve) => {
+    pubnub.hereNow({
+        channels: ['controls'],
+        includeUUIDs: true,
+        includeState: true
+    }, (status, response) => resolve({
+        status,
+        response
+    }));
+});
 
 // export const connectToChannel = () => {
 //     channel = socket.subscribe('private-controls');

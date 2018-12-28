@@ -8,10 +8,10 @@ import { initApplicationSignal } from 'modules/app/actions';
 import {
     // configAuthSignal,
     configPubSubSignal,
-    sendControlSignal,
-    getUserCountSignal
+    sendControlSignal
+    // getUserCountSignal
 } from './actions';
-import { configurePubSub, sendControl, getCurrentUsers } from './services';
+import { configurePubSub, sendControl, getCurrentUsers, watchPresence } from './services';
 
 export function* sendControlOnRequest({ payload }) {
     try {
@@ -55,6 +55,8 @@ export function* initPubSubOnRequest() {
         const pubsubConnect = yield call(configurePubSub);
 
         yield put(configPubSubSignal.success(pubsubConnect));
+
+        yield call(watchPresence);
     } catch (error) {
         yield put(configPubSubSignal.failure({ error }));
     }
@@ -67,22 +69,22 @@ export function* watchAppInitSuccessSignal() {
     );
 }
 
-export function* checkCurrentUsersOnRequest() {
-    try {
-        const getUserCount = yield call(getCurrentUsers);
-
-        console.log('getUserCount:', getUserCount);
-
-        yield put(getUserCountSignal.success({ getUserCount }));
-    } catch (error) {
-        yield put(getUserCountSignal.failure({ error }));
-    }
-}
+// export function* checkCurrentUsersOnRequest() {
+//     try {
+//         const getUserCount = yield call(getCurrentUsers);
+//
+//         console.log('getUserCount:', getUserCount);
+//
+//         yield put(getUserCountSignal.success({ getUserCount }));
+//     } catch (error) {
+//         yield put(getUserCountSignal.failure({ error }));
+//     }
+// }
 
 export function* watchPubSubSuccessSignal() {
     yield takeLatest(
         configPubSubSignal.SUCCESS,
-        checkCurrentUsersOnRequest
+        // checkCurrentUsersOnRequest
     );
 }
 
