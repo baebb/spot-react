@@ -33,7 +33,7 @@ export const watchPresence = () => eventChannel((emit) => {
             // const { action } = presence;
             // console.log('new presence');
             // console.log('action: ', action);
-            console.log('new presence: ', presence);
+            // console.log('new presence: ', presence);
             emit(presence);
         }
     });
@@ -47,10 +47,7 @@ export const getCurrentUsers = () => new Promise((resolve) => {
         channels: ['controls'],
         includeUUIDs: true,
         includeState: true
-    }, (status, response) => resolve({
-        status,
-        response
-    }));
+    }, (status, response) => resolve(response));
 });
 
 // export const connectToChannel = () => {

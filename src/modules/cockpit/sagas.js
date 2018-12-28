@@ -1,5 +1,6 @@
 // NPM Dependencies
-import { fork, throttle, takeLatest, put, call } from 'redux-saga/effects';
+import { fork, throttle, takeLatest, put, call, take } from 'redux-saga/effects';
+import _ from 'lodash';
 
 // Module Dependencies
 import { initApplicationSignal } from 'modules/app/actions';
@@ -7,9 +8,10 @@ import { initApplicationSignal } from 'modules/app/actions';
 // Local Dependencies
 import {
     // configAuthSignal,
+    getUserCountSignal,
     configPubSubSignal,
-    sendControlSignal
-    // getUserCountSignal
+    sendControlSignal,
+    updateDroneStatus,
 } from './actions';
 import { configurePubSub, sendControl, getCurrentUsers, watchPresence } from './services';
 
@@ -55,8 +57,6 @@ export function* initPubSubOnRequest() {
         const pubsubConnect = yield call(configurePubSub);
 
         yield put(configPubSubSignal.success(pubsubConnect));
-
-        yield call(watchPresence);
     } catch (error) {
         yield put(configPubSubSignal.failure({ error }));
     }
@@ -69,26 +69,56 @@ export function* watchAppInitSuccessSignal() {
     );
 }
 
-// export function* checkCurrentUsersOnRequest() {
-//     try {
-//         const getUserCount = yield call(getCurrentUsers);
-//
-//         console.log('getUserCount:', getUserCount);
-//
-//         yield put(getUserCountSignal.success({ getUserCount }));
-//     } catch (error) {
-//         yield put(getUserCountSignal.failure({ error }));
-//     }
-// }
+export function* checkCurrentUsersOnRequest() {
+    try {
+        const getUserCount = yield call(getCurrentUsers);
 
-export function* watchPubSubSuccessSignal() {
+        const { occupants } = getUserCount.channels.controls;
+
+        const hasDrone = _.some(occupants, ['uuid', 'droneboi']);
+
+        yield put(updateDroneStatus(hasDrone));
+
+        yield put(getUserCountSignal.success({ getUserCount }));
+    } catch (error) {
+        yield put(getUserCountSignal.failure({ error }));
+    }
+}
+
+export function* watchCheckCurrentUsersSignal() {
+    yield takeLatest(
+        getUserCountSignal.REQUEST,
+        checkCurrentUsersOnRequest
+    );
+}
+
+function* catchingLoads(socketChannel) {
+    while (true) {
+        const payload = yield take(socketChannel);
+        const { action: status, uuid } = payload;
+        if (uuid === 'droneboi') {
+            const droneStatus = !status === 'leave';
+            yield put(updateDroneStatus(droneStatus));
+        }
+    }
+}
+
+export function* watchPresenceOnRequest() {
+    const socketChannel = yield call(watchPresence);
+
+    yield call(catchingLoads, socketChannel);
+}
+
+export function* watchInitPubSubSuccessSignal() {
     yield takeLatest(
         configPubSubSignal.SUCCESS,
-        // checkCurrentUsersOnRequest
+        checkCurrentUsersOnRequest
     );
 }
 
 export default [
     fork(watchAppInitSuccessSignal),
-    fork(watchSendControlSignal)
+    fork(watchSendControlSignal),
+    fork(watchInitPubSubSuccessSignal),
+    fork(watchCheckCurrentUsersSignal)
 ];
