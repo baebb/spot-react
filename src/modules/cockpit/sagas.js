@@ -69,6 +69,23 @@ export function* watchAppInitSuccessSignal() {
     );
 }
 
+function* catchingLoads(socketChannel) {
+    while (true) {
+        const payload = yield take(socketChannel);
+        const { action: status, uuid } = payload;
+        if (uuid === 'droneboi') {
+            const droneStatus = status === 'join';
+            yield put(updateDroneStatus(droneStatus));
+        }
+    }
+}
+
+export function* watchPresenceOnRequest() {
+    const socketChannel = yield call(watchPresence);
+
+    yield call(catchingLoads, socketChannel);
+}
+
 export function* checkCurrentUsersOnRequest() {
     try {
         const getUserCount = yield call(getCurrentUsers);
@@ -80,6 +97,9 @@ export function* checkCurrentUsersOnRequest() {
         yield put(updateDroneStatus(hasDrone));
 
         yield put(getUserCountSignal.success({ getUserCount }));
+
+        // watch droneboi status realtime
+        yield call(watchPresenceOnRequest);
     } catch (error) {
         yield put(getUserCountSignal.failure({ error }));
     }
@@ -90,23 +110,6 @@ export function* watchCheckCurrentUsersSignal() {
         getUserCountSignal.REQUEST,
         checkCurrentUsersOnRequest
     );
-}
-
-function* catchingLoads(socketChannel) {
-    while (true) {
-        const payload = yield take(socketChannel);
-        const { action: status, uuid } = payload;
-        if (uuid === 'droneboi') {
-            const droneStatus = !status === 'leave';
-            yield put(updateDroneStatus(droneStatus));
-        }
-    }
-}
-
-export function* watchPresenceOnRequest() {
-    const socketChannel = yield call(watchPresence);
-
-    yield call(catchingLoads, socketChannel);
 }
 
 export function* watchInitPubSubSuccessSignal() {
