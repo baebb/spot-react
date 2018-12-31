@@ -3,7 +3,7 @@ import { combineReducers } from 'redux';
 
 // Module Dependencies
 import applicationReducer from 'modules/app/reducer';
-// import userReducer from 'modules/user/reducer';
+import userReducer from 'modules/user/reducer';
 import cockpitReducer from 'modules/cockpit/reducer';
 
 /**
@@ -12,6 +12,7 @@ import cockpitReducer from 'modules/cockpit/reducer';
  */
 const reducers = {
     application: applicationReducer,
+    user: userReducer,
     cockpit: cockpitReducer
 };
 
