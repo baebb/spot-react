@@ -1,10 +1,11 @@
 // Import third party ui library css
 @import '~antd/dist/antd.css';
+@import '../../../public/bootstrap.min.css';
 
 //font
-html, body, pre, code, kbd, samp {
-    font-family: 'Press Start 2P', cursive;
-}
+//html, body, pre, code, kbd, samp {
+//    font-family: "Comic Sans",cursive,sans-serif;
+//}
 
 // Layout Styles
 #root, #app {
