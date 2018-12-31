@@ -1,5 +1,17 @@
 {
   "projects": {
-    "dev": "web-homedrone-dev"
+    "default": "web-thehomepage"
+  },
+  "targets": {
+    "web-thehomepage": {
+      "hosting": {
+        "dev": [
+          "web-thehomepage-dev"
+        ],
+        "prod": [
+          "web-thehomepage"
+        ]
+      }
+    }
   }
 }
