@@ -8,10 +8,11 @@ const BabelPluginTransformClassProperties = require('babel-plugin-transform-clas
 const BabelPluginTransformRuntime = require('babel-plugin-transform-runtime');
 
 // Configuration Dependencies
-// const envConfig = require('./webpack/env');
+const envConfig = require('./env');
 
 // Constants
 const OUTPUT_DIR = path.resolve('build');
+const SPOT_CONTROL_PORTAL = envConfig[process.env.NODE_ENV];
 
 // Plugin Configuration
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -22,7 +23,8 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 
 const EnvironmentPluginConfig = new webpack.DefinePlugin({
     'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        SPOT_CONTROL_PORTAL: JSON.stringify(SPOT_CONTROL_PORTAL)
     }
 });
 
@@ -72,7 +74,7 @@ module.exports = {
             use: {
                 loader: 'url-loader',
                 options: {
-                    limit: 10000
+                    limit: 100000
                 }
             }
         },
@@ -129,6 +131,7 @@ module.exports = {
         modules: ['node_modules', path.resolve(__dirname, 'src')],
         alias: {
             public: path.resolve(__dirname, 'public'),
+            config: path.resolve(__dirname, 'src/config'),
             lib: path.resolve(__dirname, 'src/lib'),
             components: path.resolve(__dirname, 'src/components'),
             modules: path.resolve(__dirname, 'src/modules')

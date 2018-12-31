@@ -1,10 +1,11 @@
 // NPM Dependencies
 import React, { Fragment } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 // Local Dependencies
+import './core.styles.scss';
 import RouterMap from './router';
 
 const { NODE_ENV } = process.env;
@@ -12,10 +13,10 @@ const { NODE_ENV } = process.env;
 // const App = ({ authenticated }) => (
 const App = () => (
     <Fragment>
-        <h1>Spot {NODE_ENV}</h1>
         <Router>
             <RouterMap />
         </Router>
+        <p>{NODE_ENV}</p>
     </Fragment>
 );
 

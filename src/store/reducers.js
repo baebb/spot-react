@@ -4,14 +4,15 @@ import { combineReducers } from 'redux';
 // Module Dependencies
 import applicationReducer from 'modules/app/reducer';
 // import userReducer from 'modules/user/reducer';
+import cockpitReducer from 'modules/cockpit/reducer';
 
 /**
  * Mapping of all reducers within the application.
  * @type {Object}
  */
 const reducers = {
-    application: applicationReducer
-    // user: userReducer
+    application: applicationReducer,
+    cockpit: cockpitReducer
 };
 
 /**
