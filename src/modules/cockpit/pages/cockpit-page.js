@@ -84,7 +84,7 @@ class CockpitPage extends Component {
                     onKeyEvent={this.controlTouchEnd}
                 />
                 <div style={{ textAlign: 'center' }}>
-                    <img alt="cam" src="http://153.182.124.165:3030/" className="img-responsive" />
+                    <img alt="cam" src="http://153.197.32.74:3030/" className="img-responsive" />
                 </div>
                 <Row type="flex" justify="center">
                     <Col span={20} sm={6}>
